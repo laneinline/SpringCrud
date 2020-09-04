@@ -13,7 +13,8 @@ import javax.persistence.Table;
 @Table(name = "employee")
 public class Employee {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+
 	private long id;
 	
 	@Column(name = "first_name")
