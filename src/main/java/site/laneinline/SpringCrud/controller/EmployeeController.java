@@ -5,10 +5,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import site.laneinline.SpringCrud.model.Employee;
 import site.laneinline.SpringCrud.service.EmployeeService;
+import site.laneinline.SpringCrud.service.EmployeeServiceImpl;
 
 @Controller
 public class EmployeeController {
@@ -33,9 +35,19 @@ public class EmployeeController {
 	
 	@PostMapping("/saveEmployee")
 	public String SaveEmployee(@ModelAttribute("employee") Employee employee) {
+		System.out.println(employee);
 		employeeService.add(employee);
-		
+		// TODO test 
 		return "redirect:/";
+	}
+	
+	@GetMapping("/showFormForUpdateEmployee/{id}")
+	public String showFormForUpdateEmployee(@PathVariable(value ="id") long id, Model model){
+		//call service to get employee from DB 
+		Employee employee = employeeService.getById(id);
+		//set employee as model attribute 
+		model.addAttribute("employee", employee);
+		return "update_employee";
 	}
 	
 	
