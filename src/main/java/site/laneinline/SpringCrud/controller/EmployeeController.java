@@ -37,7 +37,7 @@ public class EmployeeController {
 	public String SaveEmployee(@ModelAttribute("employee") Employee employee) {
 		System.out.println(employee);
 		employeeService.add(employee);
-		// TODO test 
+
 		return "redirect:/";
 	}
 	
