@@ -3,8 +3,6 @@ package site.laneinline.SpringCrud.service;
 import java.util.List;
 import java.util.Optional;
 
-import javax.management.RuntimeErrorException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,7 +28,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Override
 	public void update(Employee employee) {
 		this.employeeRepository.save(employee);
-		
+		//TODO PROBLEM create NEW Employee if ID is null without any warnings 
 	}
 	
 	@Override
@@ -45,6 +43,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return employee;
 	}
 	
-	// TODO another todo
+	@Override
+	public void delete(long id) {
+		this.employeeRepository.deleteById(id);
+		
+	}
+	
+	
 
 }

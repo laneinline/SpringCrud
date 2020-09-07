@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import site.laneinline.SpringCrud.model.Employee;
 import site.laneinline.SpringCrud.service.EmployeeService;
-import site.laneinline.SpringCrud.service.EmployeeServiceImpl;
+
 
 @Controller
 public class EmployeeController {
@@ -50,5 +50,12 @@ public class EmployeeController {
 		return "update_employee";
 	}
 	
+	@GetMapping("/deleteEmployee/{id}")
+	public String deleteEmployee(@PathVariable(value="id") long id){
+		//call delete employee from servise
+		
+		this.employeeService.delete(id);
+		return "redirect:/";
+	}
 	
 }
