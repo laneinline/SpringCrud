@@ -2,6 +2,8 @@ package site.laneinline.SpringCrud.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+
 import site.laneinline.SpringCrud.model.Employee;
 
 public interface EmployeeService {
@@ -12,6 +14,8 @@ public interface EmployeeService {
 	void add(Employee employee);
 	void update(Employee employee);
 	void delete(long id);
+	
+
 
 	
 	
