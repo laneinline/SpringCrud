@@ -38,7 +38,33 @@ crossorigin="anonymous">
 		</tbody>
 		
 	</table>
-
+	<div th:if = "${totalPages>1}" >
+		<div class = "row col-sm10">
+			<div class="col-sm-2">
+				Total Rows :[[${totalItems}]] 
+			</div>
+			
+			<div>
+				<a th:if="${currentPageNumber > 1 }" th:href="@{'/page/' +${currentPageNumber - 1}}"> Prev </a>
+				<span th:unless="${currentPageNumber > 1 }"> Prev </span>
+			</div>
+			
+			<div class="col-sm-1">
+				<span th:each="i: ${#numbers.sequence(1, totalPages)}">
+					<a th:if="${currentPageNumber != i}" th:href="@{'/page/' + ${i} }"> [[ ${i} ]]</a>
+					
+					<span th:unless="${currentPageNumber != i }">[[ ${i} ]]</span> &nbsp; &nbsp;
+				</span>
+			</div>
+			
+			<div class="col-sm-1">
+				<a th:if="${currentPageNumber < totalPages}" th:href="@{'/page/'+${currentPageNumber + 1}}"> Next </a>
+				<span th:unless="${currentPageNumber < totalPages}"> Next </span>
+			</div>
+			
+			
+		</div>
+	</div>
 </div>
 
 

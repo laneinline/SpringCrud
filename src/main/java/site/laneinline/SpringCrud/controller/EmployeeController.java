@@ -1,6 +1,9 @@
 package site.laneinline.SpringCrud.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,8 +24,9 @@ public class EmployeeController {
 	
 	@GetMapping("/")
 	public String viewHomePage(Model model) {
-		model.addAttribute("listEmployees", employeeService.getAll() );
-		return "index";
+		return findPaginated(1, model);
+		//model.addAttribute("listEmployees", employeeService.getAll() );
+		//return "index";
 	}
 	
 	@GetMapping("/showNewEmployeeForm")
@@ -57,4 +61,20 @@ public class EmployeeController {
 		return "redirect:/";
 	}
 	
+	@GetMapping("/page/{pageNo}")
+	public String findPaginated(@PathVariable(value = "pageNo") int pageNo, Model model){
+		int pageSize = 5;
+		//TODO inplement dif page size
+		
+		Page<Employee> page = employeeService.findPaginated(pageNo, pageSize);
+		List<Employee> listEmployees = page.getContent();
+		
+		model.addAttribute("currentPageNumber", pageNo);
+		model.addAttribute("totalPages",page.getTotalPages());
+		model.addAttribute("totalItems",page.getTotalElements());
+		model.addAttribute("listEmployees", listEmployees);
+		
+		
+		return "index";
+	}
 }
