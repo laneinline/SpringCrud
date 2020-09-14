@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import net.bytebuddy.matcher.ModifierMatcher.Mode;
 import site.laneinline.SpringCrud.model.Employee;
 import site.laneinline.SpringCrud.service.EmployeeService;
 
@@ -24,7 +26,7 @@ public class EmployeeController {
 	
 	@GetMapping("/")
 	public String viewHomePage(Model model) {
-		return findPaginated(1, model);
+		return findPaginated(1, model, "firstName", "asc");
 		//model.addAttribute("listEmployees", employeeService.getAll() );
 		//return "index";
 	}
@@ -62,11 +64,17 @@ public class EmployeeController {
 	}
 	
 	@GetMapping("/page/{pageNo}")
-	public String findPaginated(@PathVariable(value = "pageNo") int pageNo, Model model){
-		int pageSize = 5;
-		//TODO inplement dif page size
+	//sortField = fields from model class for example Employee.->firstName<-
+	public String findPaginated(@PathVariable(value = "pageNo") int pageNo,Model model, 
+			@RequestParam (value= "sortField", required = false , defaultValue = "firstName" ) String sortField, 
+			@RequestParam(value ="sortDirection",required = false, defaultValue = "asc") String sortDirection  ){
 		
-		Page<Employee> page = employeeService.findPaginated(pageNo, pageSize);
+		int pageSize = 5;
+
+		//TODO implement dif page size
+		//TODO implement method with only pageNO and Model , without sort 
+		
+		Page<Employee> page = employeeService.findPaginated(pageNo, pageSize,sortField, sortDirection);
 		List<Employee> listEmployees = page.getContent();
 		
 		model.addAttribute("currentPageNumber", pageNo);
@@ -74,6 +82,9 @@ public class EmployeeController {
 		model.addAttribute("totalItems",page.getTotalElements());
 		model.addAttribute("listEmployees", listEmployees);
 		
+		model.addAttribute("sortField", sortField);
+		model.addAttribute("sortDirection", sortDirection);
+		model.addAttribute("reverseSortDirection", sortDirection.equalsIgnoreCase("asc")?"desc":"asc");
 		
 		return "index";
 	}

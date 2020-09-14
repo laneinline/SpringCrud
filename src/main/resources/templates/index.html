@@ -20,9 +20,16 @@ crossorigin="anonymous">
 	<table border="1" class="table table-striped table-responsive-md">
 		<thead>
 			<tr>
-				<th> Employee First Name </th>
-				<th> Employee Last Name </th>
-				<th> Employee Email </th>
+				<th>  
+					<a th:href = "@{'/page/' + ${currentPageNumber} + '?sortField=firstName&sortDirection=' + ${reverseSortDirection}}">Employee First Name</a>
+				</th>
+				<th> 
+					<a th:href = "@{'/page/' +${currentPageNumber} + '?sortField=lastName&sortDirection=' + ${reverseSortDirection}}">Employee Last Name</a> 
+				</th>
+				<th>
+					<a th:href = "@{'/page/' +${currentPageNumber} + '?sortField=email&sortDirection=' +${reverseSortDirection}}">Employee Email</a> 
+				</th>
+				
 				<th> Actions </th>
 			</tr>
 		</thead>
@@ -60,6 +67,11 @@ crossorigin="anonymous">
 			<div class="col-sm-1">
 				<a th:if="${currentPageNumber < totalPages}" th:href="@{'/page/'+${currentPageNumber + 1}}"> Next </a>
 				<span th:unless="${currentPageNumber < totalPages}"> Next </span>
+			</div>
+			
+			<div class="col-sm-1">
+				<a th:if="${currentPageNumber < totalPages}" th:href="@{'/page/'+${totalPages}}"> Last </a>
+				<span th:unless="${currentPageNumber < totalPages}"> Last </span>
 			</div>
 			
 			
